@@ -15,7 +15,6 @@ class SaleOrderLine(models.Model):
         digits='Product Price', store=True, readonly=False,
         groups="base.group_user"
     )
-
     @api.depends('product_id', 'company_id', 'currency_id', 'product_uom')
     def _compute_purchase_price(self):
         for line in self:
@@ -63,7 +62,7 @@ class SaleOrderLine(models.Model):
             if pricelist_items:
                 exclude_product = any(item.exclude_product_test for item in pricelist_items)
             if exclude_product:
-                subtotal_without_discount = line.price_unit * line.product_uom_qty
+                subtotal_without_discount = line.price_unit/(1+0.2) * line.product_uom_qty
                 margin = subtotal_without_discount - (line.purchase_price * line.product_uom_qty)
                 if subtotal_without_discount == 0:
                     margin_percent = 0
