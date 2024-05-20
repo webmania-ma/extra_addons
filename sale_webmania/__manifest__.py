@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name':'Margins in Sales Orders ',
+    'name':'Margins in Sales Orders webmania',
     'version': '1.0',
     'category': 'Sales Management',
     'description': """

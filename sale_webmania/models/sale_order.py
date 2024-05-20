@@ -75,14 +75,12 @@ class SaleOrderLine(models.Model):
                 line.margin = line.price_subtotal - (line.purchase_price * line.product_uom_qty)
                 line.margin_percent = line.price_subtotal and line.margin / line.price_subtotal
 
-
 class SaleOrder(models.Model):
     _inherit = "sale.order"
     margin = fields.Monetary("Margin", compute='_compute_margin', store=True)
     margin_percent = fields.Float(
         "Margin (%)", compute='_compute_margin', store=True, group_operator='avg'
     )
-
     @api.depends('order_line.margin', 'amount_untaxed', 'order_line.product_id.product_tmpl_id', 'pricelist_id')
     def _compute_margin(self):
         for order in self:
