@@ -4,7 +4,7 @@
     'summary': """Valued sale order and delivery slip """,
 
 
-    'version'    : "14.0.3.1",
+    'version': "14.0.3.1",
     'category': 'Sales/sales',
 
     
@@ -46,14 +46,15 @@
         'views/sale_order.xml',
         'views/account_move_line.xml',
         'views/stock_picking.xml',
+        'views/add_print_button.xml',
 
         'wizard/sale_payment.xml',
     ],
 
 
-    'license'       : "LGPL-3",
-    'price'         : "109.99",
-    'currency'      : 'Eur',
+    'license': "LGPL-3",
+    'price': "109.99",
+    'currency': 'Eur',
 
 
     'images'        : [

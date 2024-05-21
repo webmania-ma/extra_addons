@@ -28,6 +28,7 @@ class SaleOrderPayment(models.TransientModel):
         'partner_id': self.order_id.partner_id.id,
         'amount' : self.payment_amount,
         'date': self.payment_date,
+        'invoice_origin': self.order_id.move_id.name,
         'ref': self.memo,
         'journal_id': self.journal_id.id,
         }

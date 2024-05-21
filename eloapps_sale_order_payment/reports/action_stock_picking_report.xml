@@ -17,9 +17,9 @@
         report_type="qweb-pdf"
         name="eloapps_sale_order_payment.report_sale_order_valued"
         file="eloapps_sale_order_payment.report_sale_order_valued"
+        menu="False"
+
         />
- 
-    
-    
+
   </data>
 </odoo>

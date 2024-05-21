@@ -97,7 +97,7 @@ class SaleOrder(models.Model):
                 'context': {
                         'default_order_id': self.id,
                         'default_payment_amount': self.residual_amount,
-                        'default_memo': self.name,
+                        'default_memo': self.move_id.name,
                     },
                 'target': 'new'
             }
@@ -595,3 +595,6 @@ class SaleOrder(models.Model):
             }
             sale.with_context(ctx).write(vals)
         return True
+
+    def print_report_cmd(self):
+        return self.env.ref('eloapps_sale_order_payment.sale_valued').report_action(self)
