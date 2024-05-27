@@ -47,33 +47,28 @@ class Picking(models.Model):
         }
 
     def write(self, vals):
+        res = super(Picking, self).write(vals)
+
         for rec in self:
             if vals.get('date_done') and rec.picking_type_code == 'outgoing':
-                sale_orders = self.env['sale.order'].browse(
-                    self._context.get('active_ids', []))
+                sale_orders = rec.sale_id
+                if not sale_orders:
+                    sale_orders = self.env['sale.order'].search([('picking_ids', 'in', rec.ids)])
 
-                if self.company_id.create_invoice == True:
-
-                    if any(line for line in sale_orders.order_line
-                           if line.product_uom_qty != line.qty_invoiced):
-
+                if rec.company_id.create_invoice:
+                    if any(line for line in sale_orders.order_line if line.product_uom_qty != line.qty_invoiced):
                         invoice = sale_orders._create_invoices()
                         invoice.action_post()
 
-                        if self.company_id.auto_send_mail == True:
-
-                            template_id = self.env.ref(
-                                'account.email_template_edi_invoice')
-                            template_id.with_context(
-                                model_description=''
-                            ).sudo().send_mail(
+                        if rec.company_id.auto_send_mail:
+                            template_id = self.env.ref('account.email_template_edi_invoice')
+                            template_id.with_context(model_description='').sudo().send_mail(
                                 invoice.id,
                                 force_send=True,
-                                notif_layout="mail.mail_notification_paynow")
+                                notif_layout="mail.mail_notification_paynow"
+                            )
 
-                if self.company_id.auto_send_mail == True and self.company_id.create_invoice == False:
-                    raise UserError(
-                        "Please first enable 'Create Invoice on Delivery Validate' Configuration"
-                    )
+                if rec.company_id.auto_send_mail and not rec.company_id.create_invoice:
+                    raise UserError("Please first enable 'Create Invoice on Delivery Validate' Configuration")
 
-        return super(Picking, self).write(vals)
+        return res
