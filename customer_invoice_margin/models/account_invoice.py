@@ -34,7 +34,7 @@ class AccountMove(models.Model):
         for record in self:
             if record.invoice_line_ids:
                 for line in record.invoice_line_ids:
-                    sale_price = line.price_unit * line.quantity
+                    sale_price = line.price_unit / (1 + 0.2) * line.quantity
                     discount = (sale_price * line.discount)/100
                     cost = line.product_id.standard_price * line.quantity
                     line_cost += cost
@@ -60,7 +60,7 @@ class AccountMoveLine(models.Model):
         sale_price = discount = cost = margin_amount = margin_percentage = 0.0
         for record in self:
             if record.product_id:
-                sale_price = record.price_unit * record.quantity
+                sale_price = record.price_unit / (1 + 0.2) * record.quantity
                 discount = (sale_price*record.discount)/100
                 cost = record.product_id.standard_price * record.quantity
                 margin_amount = (sale_price - discount) - cost
