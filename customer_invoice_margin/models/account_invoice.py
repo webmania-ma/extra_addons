@@ -54,6 +54,7 @@ class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
     margin_percentage = fields.Char(compute='_get_total_percentage', string='Margin Percentage')
+    margin_amount = fields.Char(compute='_get_total_percentage', string='Margin Amount')
 
     @api.depends('quantity','price_unit', 'discount')
     def _get_total_percentage(self):
