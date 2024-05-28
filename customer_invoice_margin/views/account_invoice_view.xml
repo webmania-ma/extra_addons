@@ -14,6 +14,7 @@
                 </group>
             </xpath>
             <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='price_subtotal']" position="after">
+                <field name="margin_amount" groups="base.group_user"/>
                 <field name="margin_percentage" groups="base.group_user"/>
             </xpath>
         </field>
