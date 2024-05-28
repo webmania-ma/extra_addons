@@ -68,6 +68,8 @@ class AccountMoveLine(models.Model):
                     margin_percentage = (margin_amount / cost) * 100
                 else:
                     margin_percentage = 100 
+                record.margin_amount = margin_amount    
                 record.margin_percentage = str(round(margin_percentage,2)) + ' %'
             else:
                 record.margin_percentage = ''
+                record.margin_amount = ''    
