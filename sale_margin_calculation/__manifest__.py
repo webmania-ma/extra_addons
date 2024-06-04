@@ -15,5 +15,6 @@
         # 'security/ir.model.access.csv',
         'views/hook_view_product_price_list.xml',
         'views/sale_margin_view.xml',
+        'views/view_sale_order.xml',
     ],
 }
